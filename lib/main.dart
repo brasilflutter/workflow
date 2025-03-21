@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Conversor de moedas',
+      title: 'Flutter Brasil App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Conversor de moedas'),
+      home: const MyHomePage(title: 'Flutter Brasil App'),
     );
   }
 }
@@ -93,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
-              child: Text('Conversor de moedas'),
+              child: Text('Flutter Brasil App'),
             ),
             TextFormField(
               controller: txtCurrency,
