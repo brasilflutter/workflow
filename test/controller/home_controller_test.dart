@@ -11,9 +11,9 @@ void main() {
   final dio = MockDio();
   late final controller = HomeController(client: dio);
   test(
-      'Given a CheckInternetUsecase '
-      'When lookup return a empty List '
-      'Then should return false', () async {
+      'Given a USDBRL'
+      'When dolar is 2'
+      'Then real should be 11.4672', () async {
     var response = Response(
         statusCode: 200,
         data: {
