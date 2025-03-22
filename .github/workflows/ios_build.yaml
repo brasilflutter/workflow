@@ -31,11 +31,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Generate .env
-        run: |
-          touch .env
-          echo "API_KEY=${{secrets.API_KEY }}" >> .env
-          cat .env
+      # - name: Generate .env
+      #   run: |
+      #     touch .env
+      #     echo "API_KEY=${{secrets.API_KEY }}" >> .env
+      #     cat .env
 
       - name: Run Build Runner
         run: dart run build_runner build -d
