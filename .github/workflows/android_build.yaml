@@ -1,0 +1,55 @@
+name: "Build Android"
+
+on:
+  workflow_call: # Altere o trigger para workflow_call
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: "17.x"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2.14.0
+        with:
+          flutter-version: 3.29.0
+          channel: stable
+
+      - name: Exibir a versao instalada do Flutter
+        run: flutter --version
+
+      - name: Clean
+        run: flutter clean
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate .env
+        run: |
+          touch .env
+          echo "API_KEY=${{secrets.API_KEY }}" >> .env
+          cat .env
+
+      - name: Run Build Runner
+        run: dart run build_runner build -d
+
+      - name: Statically analyze
+        run: flutter analyze .
+
+      - name: Run Tests
+        run: flutter test
+
+      - name: Build apk.
+        run: flutter build apk --release
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk

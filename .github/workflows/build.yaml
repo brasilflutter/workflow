@@ -1,0 +1,17 @@
+name: "Flutter CI"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  trigger-android-build:
+    name: Android Build
+    uses: ./.github/workflows/android_build.yml
+
+  trigger-ios-build:
+    name: iOS Build
+    needs: trigger-android-build
+    uses: ./.github/workflows/ios_build.yml
