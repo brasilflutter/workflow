@@ -5,6 +5,8 @@ on:
 
 jobs:
   build-android:
+    env:
+      TESTE3: "21"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,7 +35,9 @@ jobs:
       - name: Generate .env
         run: |
           touch .env
-          echo "API_KEY=${{secrets.API_KEY }}" >> .env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "TESTE=${{ vars.TESTE }}" >> .env
+          echo "TESTE3=${{ env.TESTE3 }}" >> .env
           cat .env
 
       - name: Run Build Runner
