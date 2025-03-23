@@ -11,6 +11,7 @@ jobs:
       TESTE: ${{ vars.TESTE }}
       IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
       IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
+      API_KEY: ${{ secrets.API_KEY }}
 
     runs-on: macos-latest
 
@@ -18,6 +19,7 @@ jobs:
       - name: Decode signing certificate
         run: |
           echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE }}" 
+          echo "API_KEY=${{ env.API_KEY }}" 
           echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS }}"
           echo "TTTT=${{ env.TTTT }}"
           echo "TESTE=${{ env.TESTE }}"
