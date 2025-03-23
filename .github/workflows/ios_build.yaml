@@ -10,6 +10,20 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Import code sign
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ secrets.IOS_CERT_PASS }}
+
+      - name: Download provisioning
+        uses: Apple-Actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: com.myApp.MyApp
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+
       - uses: actions/checkout@v4
 
       - name: Exibir a versao atual do macOS
@@ -49,17 +63,18 @@ jobs:
           flutter build ios --release
 
       # - name: Upload IPA to App Store Connect
-      #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey N9H98Y3LBZ --apiIssuer $(IOS_ISSUER_ID)
+      #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
 
       - name: "Upload app to TestFlight"
         uses: apple-actions/upload-testflight-build@v1
         with:
-          app-path: "./app.ipa"
+          app-path: "./build/ios/conversor_moedas.ipa"
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
           name: release-ipa
-          path: build/ios/iphonesimulator/Runner.app
+          path: build/ios/conversor_moedas.ipa
