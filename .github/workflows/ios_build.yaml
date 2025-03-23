@@ -9,6 +9,7 @@ jobs:
       TESTE3: "21"
       TTTT: ${{ vars.TTTT }}
       TESTE: ${{ vars.TESTE }}
+      TESTE4: ${{ vars.TESTE4 }}
       IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
       IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
       API_KEY: ${{ secrets.API_KEY }}
@@ -24,6 +25,10 @@ jobs:
           echo "TTTT=${{ env.TTTT }}"
           echo "TESTE=${{ env.TESTE }}"
           echo "TESTE3=${{env.TESTE3}}"
+          echo "TESTE4=${{env.TESTE4}}"
+
+      - name: Echo variables Secrets
+        run: |
           echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID_TASK}}"
           echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID_TASK}}"
           echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY_TASK}}"
