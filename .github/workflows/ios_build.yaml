@@ -21,15 +21,22 @@ jobs:
     steps:
       - name: Echo variables
         run: |
-          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE }}" 
-          echo "API_KEY=${{ env.API_KEY }}" 
-          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS }}"
           echo "TTTT=${{ env.TTTT }}"
           echo "TESTE=${{ env.TESTE }}"
           echo "TESTE3=${{env.TESTE3}}"
-          echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID}}"
-          echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID}}"
-          echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY}}"
+          echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID_taks}}"
+          echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID_taks}}"
+          echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY_taks}}"
+          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE_taks}}" 
+          echo "API_KEY=${{ env.API_KEY_taks}}" 
+          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS_taks}}"
+        env:
+          IOS_CERT_PASS_TAKS: ${{ secrets.IOS_CERT_PASS }}
+          IOS_CERTIFICATE_FILE_TAKS: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          API_KEY_TAKS: ${{ secrets.API_KEY }}
+          APPSTORE_ISSUER_ID_TAKS: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_API_KEY_ID_TAKS: ${{ secrets.APPSTORE_API_KEY_ID }}
+          APPSTORE_API_PRIVATE_KEY_TAKS: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
