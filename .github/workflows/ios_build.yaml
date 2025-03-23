@@ -19,7 +19,7 @@ jobs:
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
         with:
-          p12-file-base64: "certificado.base64"
+          p12-file-base64: ${{ secrets.IOS_CERTIFICATE_FILE }}
           p12-password: ${{ secrets.IOS_CERTIFICATE_FILE }}
 
       - name: Download provisioning
