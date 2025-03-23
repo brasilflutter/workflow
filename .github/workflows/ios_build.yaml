@@ -10,22 +10,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Generate gerando certificado
-        run: |
-          touch certificado.base64
-          echo "${{ secrets.IOS_CERTIFICATE_FILE }}" >> certificado.base64
-          cat certificado.base64
       - name: Decode signing certificate
         run: |
-          echo "${{ secrets.IOS_CERTIFICATE_FILE }}" | base64 --decode > certificate.p12
-        env:
-          IOS_P12_BASE64: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          echo "${{ secrets.IOS_CERTIFICATE_FILE }}" 
+          echo "${{ secrets.IOS_CERT_PASS }}"
+          echo "${{ vars.TESTE123 }}"
 
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
         with:
-          p12-filepath: "certificate.p12"
-          p12-password: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          p12-file-base64: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ secrets.IOS_CERT_PASS }}
 
       - name: Download provisioning
         uses: Apple-Actions/download-provisioning-profiles@v1
