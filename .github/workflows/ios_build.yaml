@@ -19,7 +19,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Decode signing certificate
+      - name: Echo variables
         run: |
           echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE }}" 
           echo "API_KEY=${{ env.API_KEY }}" 
