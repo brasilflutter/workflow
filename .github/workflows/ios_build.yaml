@@ -5,6 +5,8 @@ on:
 
 jobs:
   build-ios:
+    env:
+      TESTE3: "21"
     runs-on: macos-latest
 
     steps:
@@ -31,19 +33,31 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      # - name: Generate .env
-      #   run: |
-      #     touch .env
-      #     echo "API_KEY=${{secrets.API_KEY }}" >> .env
-      #     cat .env
-
       - name: Run Build Runner
         run: dart run build_runner build -d
 
+      - name: Generate .env
+        run: |
+          touch .env
+          echo "API_KEY=${{ secrets.API_KEY }}" >> .env
+          echo "TESTE=${{ vars.TESTE }}" >> .env
+          echo "TESTE3=${{ env.TESTE3 }}" >> .env
+          cat .env
+
       - name: Executar Build para iOS
         run: |
-          flutter build ios --simulator --debug
+          flutter build ios --release
 
+      # - name: Upload IPA to App Store Connect
+      #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey N9H98Y3LBZ --apiIssuer $(IOS_ISSUER_ID)
+
+      - name: "Upload app to TestFlight"
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: "./app.ipa"
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
