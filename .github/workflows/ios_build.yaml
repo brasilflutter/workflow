@@ -20,6 +20,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Verificar secret
+        run: echo "$SECRET"
+        env:
+          SECRET: ${{ secrets.SUA_CHAVE }}
+
       - name: Echo variables
         run: |
           echo "TTTT=${{ env.TTTT }}"
