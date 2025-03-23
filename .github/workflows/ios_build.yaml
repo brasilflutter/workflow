@@ -7,15 +7,20 @@ jobs:
   build-ios:
     env:
       TESTE3: "21"
+      TTTT: ${{ vars.TTTT }}
+      TESTE: ${{ vars.TESTE }}
+      IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
+      IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
+
     runs-on: macos-latest
 
     steps:
       - name: Decode signing certificate
         run: |
-          echo "IOS_CERTIFICATE_FILE=${{ secrets.IOS_CERTIFICATE_FILE }}" 
-          echo "IOS_CERT_PASS=${{ secrets.IOS_CERT_PASS }}"
+          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE }}" 
+          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS }}"
           echo "TTTT=${{ env.TTTT }}"
-          echo "TESTE=${{ vars.TESTE }}"
+          echo "TESTE=${{ env.TESTE }}"
 
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
