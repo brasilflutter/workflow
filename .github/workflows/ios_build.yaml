@@ -16,15 +16,11 @@ jobs:
       APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
       APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
       APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+      SECRET: ${{ secrets.SUA_CHAVE }}
 
     runs-on: macos-latest
 
     steps:
-      - name: Verificar secret
-        run: echo "$SECRET"
-        env:
-          SECRET: ${{ secrets.SUA_CHAVE }}
-
       - name: Echo variables
         run: |
           echo "TTTT=${{ env.TTTT }}"
@@ -34,6 +30,7 @@ jobs:
 
       - name: Echo variables Secrets
         run: |
+          echo "SECRET=${{env.SECRET}}"
           echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID_TASK}}"
           echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID_TASK}}"
           echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY_TASK}}"
