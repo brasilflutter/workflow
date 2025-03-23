@@ -10,7 +10,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Generate .env
+      - name: Generate gerando certificado
         run: |
           touch certificado.p12
           echo "${{ secrets.IOS_CERTIFICATE_FILE }}" >> certificado.p12
@@ -20,7 +20,7 @@ jobs:
         uses: Apple-Actions/import-codesign-certs@v1
         with:
           p12-file-base64: "certificado.p12"
-          p12-password: ${{ secrets.IOS_CERT_PASS }}
+          p12-password: ${{ secrets.IOS_CERTIFICATE_FILE }}
 
       - name: Download provisioning
         uses: Apple-Actions/download-provisioning-profiles@v1
