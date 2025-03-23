@@ -19,13 +19,17 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Decode signing certificate
+      - name: Echo variables
         run: |
-          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE }}" 
-          echo "API_KEY=${{ env.API_KEY }}" 
-          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS }}"
-          echo "TTTT=${{ env.TTTT }}"
-          echo "TESTE=${{ env.TESTE }}"
+          echo "TESTE3=${{env.TESTE3}}
+          echo "TTTT=${{env.TTTT}}
+          echo "TESTE=${{env.TESTE}}
+          echo "IOS_CERT_PASS=${{env.IOS_CERT_PASS}}
+          echo "IOS_CERTIFICATE_FILE=${{env.IOS_CERTIFICATE_FILE}}
+          echo "API_KEY=${{env.API_KEY}}
+          echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID}}
+          echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID}}
+          echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY}}
 
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
