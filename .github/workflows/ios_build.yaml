@@ -100,10 +100,16 @@ jobs:
       - name: Run Build Runner
         run: dart run build_runner build -d
 
-      - name: Limpar DerivedData
+      - name: Configurar provisionamento automático do Xcode
         run: |
-          rm -rf ~/Library/Developer/Xcode/DerivedData/*
-
+          cd ios
+          xcodebuild -project Runner.xcodeproj -target Runner -configuration Release -showBuildSettings | grep DEVELOPMENT_TEAM | awk -F '= ' '{print $2}' > team_id.txt
+          TEAM_ID=$(cat team_id.txt)
+          rm team_id.txt
+          if [ -n "$TEAM_ID" ]; then
+            /usr/libexec/PlistBuddy -c "Set :DEVELOPMENT_TEAM $TEAM_ID" Runner.xcodeproj/project.pbxproj
+            /usr/libexec/PlistBuddy -c "Set :ProvisioningStyle Automatic" Runner.xcodeproj/project.pbxproj
+          fi
       - name: Executar Build para iOS
         run: |
           flutter build ios --release
