@@ -108,17 +108,9 @@ jobs:
       #       /usr/libexec/PlistBuddy -c "Add :DEVELOPMENT_TEAM string $TEAM_ID" Runner.xcodeproj/project.pbxproj
       #       /usr/libexec/PlistBuddy -c "Add :ProvisioningStyle string Automatic" Runner.xcodeproj/project.pbxproj
       #     fi
-
-      - name: Archive iOS App
-        run: |
-          xcodebuild archive \
-            -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath build/Runner.xcarchive
       - name: Executar Build para iOS
         run: |
-          flutter build ios --release --split-debug-info --obfuscate
+          flutter build ios --release --split-debug-info --obfuscate --export-options-plist=./ios/ExportOptions.plist
 
       # - name: Upload IPA to App Store Connect
       #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
