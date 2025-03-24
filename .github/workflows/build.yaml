@@ -30,10 +30,11 @@ jobs:
   #     APPSTORE_API_KEY_ID: ${{ env.APPSTORE_API_KEY_ID }}
   #     APPSTORE_API_PRIVATE_KEY: ${{ env.APPSTORE_API_PRIVATE_KEY }}
   #     SECRET: ${{ env.SUA_CHAVE }}
+
   trigger-ios-build:
     name: iOS Build
     uses: ./.github/workflows/ios_build.yaml
-    secrets:
+    with:
       IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
       IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
       API_KEY: ${{ secrets.API_KEY }}

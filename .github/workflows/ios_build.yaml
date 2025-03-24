@@ -2,6 +2,19 @@ name: "Build IOS"
 
 on:
   workflow_call: # Altere o trigger para workflow_call
+    secrets:
+      APPSTORE_ISSUER_ID_TASK:
+        required: true
+      APPSTORE_API_KEY_ID_TASK:
+        required: true
+      APPSTORE_API_PRIVATE_KEY_TASK:
+        required: true
+      IOS_CERTIFICATE_FILE_TASK:
+        required: true
+      API_KEY_TASK:
+        required: true
+      IOS_CERT_PASS_TASK:
+        required: true
 jobs:
   build-ios:
     env:
