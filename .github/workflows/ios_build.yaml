@@ -35,19 +35,12 @@ jobs:
 
       - name: Echo variables Secrets
         run: |
-          echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID}}"
-          echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID}}"
-          echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY}}"
-          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE}}" 
-          echo "API_KEY=${{ env.API_KEY}}" 
-          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS}}"
-        env:
-          IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
-          IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
-          API_KEY: ${{ secrets.API_KEY }}
-          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-          APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-          APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+          echo "APPSTORE_ISSUER_ID=${{secrets.APPSTORE_ISSUER_ID}}"
+          echo "APPSTORE_API_KEY_ID=${{secrets.APPSTORE_API_KEY_ID}}"
+          echo "APPSTORE_API_PRIVATE_KEY=${{secrets.APPSTORE_API_PRIVATE_KEY}}"
+          echo "IOS_CERTIFICATE_FILE=${{ secrets.IOS_CERTIFICATE_FILE}}" 
+          echo "API_KEY=${{ secrets.API_KEY}}" 
+          echo "IOS_CERT_PASS=${{ secrets.IOS_CERT_PASS}}"
 
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
@@ -114,16 +107,8 @@ jobs:
       - name: Upload IPA to App Store Connect
         run: xcrun altool --upload-app --type ios -f ./build/ios/ipa/conversor_moedas.ipa --apiKey ${{ secrets.APPSTORE_API_KEY_ID }} --apiIssuer ${{ secrets.APPSTORE_ISSUER_ID }}
 
-      # - name: "Upload app to TestFlight"
-      #   uses: apple-actions/upload-testflight-build@v1
-      #   with:
-      #     app-path: "./build/ios/ipa/conversor_moedas.ipa"
-      #     issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-      #     api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-      #     api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:
           name: release-ipa
-          path: build/ios/conversor_moedas.ipa
+          path: build/ios/ipa/conversor_moedas.ipa
