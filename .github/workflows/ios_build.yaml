@@ -63,6 +63,10 @@ jobs:
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
+      - name: Listar perfis de provisionamento
+        run: |
+          ls ~/Library/MobileDevice/Provisioning\ Profiles/
+
       - uses: actions/checkout@v4
 
       - name: Exibir a versao atual do macOS
@@ -96,9 +100,13 @@ jobs:
       - name: Run Build Runner
         run: dart run build_runner build -d
 
+      - name: Limpar DerivedData
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
       - name: Executar Build para iOS
         run: |
-          flutter build ios --release -allowProvisioningUpdates
+          flutter build ios --release
 
       # - name: Upload IPA to App Store Connect
       #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
