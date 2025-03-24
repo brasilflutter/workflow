@@ -103,11 +103,9 @@ jobs:
       - name: Configurar provisionamento automático do Xcode
         run: |
           cd ios
-          xcodebuild -project Runner.xcodeproj -target Runner -configuration Release -showBuildSettings | grep DEVELOPMENT_TEAM | awk -F '= ' '{print $2}' > team_id.txt
-          TEAM_ID=P3472J82HC
-          rm team_id.txt
+          TEAM_ID="P3472J82HC" # Seu Team ID aqui
           if [ -n "$TEAM_ID" ]; then
-            /usr/libexec/PlistBuddy -c "Set :DEVELOPMENT_TEAM $TEAM_ID" Runner.xcodeproj/project.pbxproj
+            /usr/libexec/PlistBuddy -c "Add :DEVELOPMENT_TEAM string $TEAM_ID" Runner.xcodeproj/project.pbxproj
             /usr/libexec/PlistBuddy -c "Set :ProvisioningStyle Automatic" Runner.xcodeproj/project.pbxproj
           fi
       - name: Executar Build para iOS
