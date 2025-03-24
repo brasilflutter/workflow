@@ -48,7 +48,9 @@ jobs:
           APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
           APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
           APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-
+      - name: Listar perfis de provisionamento
+        run: |
+          ls ~/Library/MobileDevice/Provisioning\ Profiles/
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
         with:
