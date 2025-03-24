@@ -21,6 +21,13 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Checar se secret está presente
+        run: |
+          if [ -z "$SECRET" ]; then
+            echo "❌ Secret está vazio!"
+          else
+            echo "✅ Secret está aqui!"
+          fi
       - name: Echo variables
         run: |
           echo "TTTT=${{ env.TTTT }}"
