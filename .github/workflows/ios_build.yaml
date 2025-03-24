@@ -52,16 +52,16 @@ jobs:
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
         with:
-          p12-file-base64: ${{ env.IOS_CERTIFICATE_FILE }}
-          p12-password: ${{ env.IOS_CERT_PASS }}
+          p12-file-base64: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ secrets.IOS_CERT_PASS }}
 
       - name: Download provisioning
         uses: Apple-Actions/download-provisioning-profiles@v1
         with:
           bundle-id: com.myApp.MyApp
-          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - uses: actions/checkout@v4
 
@@ -107,9 +107,9 @@ jobs:
         uses: apple-actions/upload-testflight-build@v1
         with:
           app-path: "./build/ios/conversor_moedas.ipa"
-          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@main
