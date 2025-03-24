@@ -58,7 +58,7 @@ jobs:
       - name: Download provisioning
         uses: Apple-Actions/download-provisioning-profiles@v1
         with:
-          bundle-id: com.myApp.MyApp
+          bundle-id: br.flutterbrasil.currencyconverter
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
           api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
