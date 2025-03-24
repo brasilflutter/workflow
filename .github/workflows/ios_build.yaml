@@ -19,7 +19,6 @@ jobs:
       SECRET: ${{ secrets.SUA_CHAVE }}
 
     runs-on: macos-latest
-    environment: staging
 
     steps:
       - name: Echo variables
@@ -31,16 +30,13 @@ jobs:
 
       - name: Echo variables Secrets
         run: |
-          echo "SECRET=${{env.SECRET}}"
           echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID_TASK}}"
           echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID_TASK}}"
           echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY_TASK}}"
           echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE_TASK}}" 
           echo "API_KEY=${{ env.API_KEY_TASK}}" 
           echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS_TASK}}"
-          echo "MY_SECRET=${{ env.MY_SECRET}}"
         env:
-          MY_SECRET: ${{ secrets.TESTE }}
           IOS_CERT_PASS_TASK: ${{ secrets.IOS_CERT_PASS }}
           IOS_CERTIFICATE_FILE_TASK: ${{ secrets.IOS_CERTIFICATE_FILE }}
           API_KEY_TASK: ${{ secrets.API_KEY }}
@@ -85,9 +81,6 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Run Build Runner
-        run: dart run build_runner build -d
-
       - name: Generate .env
         run: |
           touch .env
@@ -95,6 +88,9 @@ jobs:
           echo "TESTE=${{ env.TESTE }}" >> .env
           echo "TESTE3=${{ env.TESTE3 }}" >> .env
           cat .env
+
+      - name: Run Build Runner
+        run: dart run build_runner build -d
 
       - name: Executar Build para iOS
         run: |

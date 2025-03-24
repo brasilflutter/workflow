@@ -11,7 +11,116 @@ jobs:
   #   name: Android Build
   #   uses: ./.github/workflows/android_build.yaml
 
-  trigger-ios-build:
-    name: iOS Build
-    # needs: trigger-android-build
-    uses: ./.github/workflows/ios_build.yaml
+  # trigger-ios-build:
+  #   name: iOS Build
+  #   # needs: trigger-android-build
+  #   uses: ./.github/workflows/ios_build.yaml
+
+  build-ios:
+    env:
+      TESTE3: "21"
+      TTTT: ${{ vars.TTTT }}
+      TESTE: ${{ vars.TESTE }}
+      TESTE4: ${{ vars.TESTE4 }}
+      IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
+      IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
+      API_KEY: ${{ secrets.API_KEY }}
+      APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+      APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+      APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+      SECRET: ${{ secrets.SUA_CHAVE }}
+
+    runs-on: macos-latest
+
+    steps:
+      - name: Echo variables
+        run: |
+          echo "TTTT=${{ env.TTTT }}"
+          echo "TESTE=${{ env.TESTE }}"
+          echo "TESTE3=${{env.TESTE3}}"
+          echo "TESTE4=${{env.TESTE4}}"
+
+      - name: Echo variables Secrets
+        run: |
+          echo "APPSTORE_ISSUER_ID=${{env.APPSTORE_ISSUER_ID_TASK}}"
+          echo "APPSTORE_API_KEY_ID=${{env.APPSTORE_API_KEY_ID_TASK}}"
+          echo "APPSTORE_API_PRIVATE_KEY=${{env.APPSTORE_API_PRIVATE_KEY_TASK}}"
+          echo "IOS_CERTIFICATE_FILE=${{ env.IOS_CERTIFICATE_FILE_TASK}}" 
+          echo "API_KEY=${{ env.API_KEY_TASK}}" 
+          echo "IOS_CERT_PASS=${{ env.IOS_CERT_PASS_TASK}}"
+        env:
+          IOS_CERT_PASS_TASK: ${{ secrets.IOS_CERT_PASS }}
+          IOS_CERTIFICATE_FILE_TASK: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          API_KEY_TASK: ${{ secrets.API_KEY }}
+          APPSTORE_ISSUER_ID_TASK: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_API_KEY_ID_TASK: ${{ secrets.APPSTORE_API_KEY_ID }}
+          APPSTORE_API_PRIVATE_KEY_TASK: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+
+      - name: Import code sign
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ env.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ env.IOS_CERT_PASS }}
+
+      - name: Download provisioning
+        uses: Apple-Actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: com.myApp.MyApp
+          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+
+      - name: Exibir a versao atual do macOS
+        run: sw_vers -productVersion
+
+      - name: Instalar o Flutter
+        uses: subosito/flutter-action@v2.14.0
+        with:
+          flutter-version: 3.29.0
+          channel: stable
+
+      - name: Exibir a versao instalada do Flutter
+        run: flutter --version
+
+      - name: Informacoes e configuracoes do Flutter
+        run: flutter doctor -v
+
+      - name: Clean
+        run: flutter clean
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Generate .env
+        run: |
+          touch .env
+          echo "API_KEY=${{ env.API_KEY }}" >> .env
+          echo "TESTE=${{ env.TESTE }}" >> .env
+          echo "TESTE3=${{ env.TESTE3 }}" >> .env
+          cat .env
+
+      - name: Run Build Runner
+        run: dart run build_runner build -d
+
+      - name: Executar Build para iOS
+        run: |
+          flutter build ios --release
+
+      # - name: Upload IPA to App Store Connect
+      #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
+
+      - name: "Upload app to TestFlight"
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: "./build/ios/conversor_moedas.ipa"
+          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: release-ipa
+          path: build/ios/conversor_moedas.ipa
