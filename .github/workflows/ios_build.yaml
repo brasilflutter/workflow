@@ -49,70 +49,70 @@ jobs:
           APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
           APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
 
-      # - name: Import code sign
-      #   uses: Apple-Actions/import-codesign-certs@v1
-      #   with:
-      #     p12-file-base64: ${{ env.IOS_CERTIFICATE_FILE }}
-      #     p12-password: ${{ env.IOS_CERT_PASS }}
+      - name: Import code sign
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          p12-file-base64: ${{ env.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ env.IOS_CERT_PASS }}
 
-      # - name: Download provisioning
-      #   uses: Apple-Actions/download-provisioning-profiles@v1
-      #   with:
-      #     bundle-id: com.myApp.MyApp
-      #     issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
-      #     api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
-      #     api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+      - name: Download provisioning
+        uses: Apple-Actions/download-provisioning-profiles@v1
+        with:
+          bundle-id: com.myApp.MyApp
+          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
 
-      # - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # - name: Exibir a versao atual do macOS
-      #   run: sw_vers -productVersion
+      - name: Exibir a versao atual do macOS
+        run: sw_vers -productVersion
 
-      # - name: Instalar o Flutter
-      #   uses: subosito/flutter-action@v2.14.0
-      #   with:
-      #     flutter-version: 3.29.0
-      #     channel: stable
+      - name: Instalar o Flutter
+        uses: subosito/flutter-action@v2.14.0
+        with:
+          flutter-version: 3.29.0
+          channel: stable
 
-      # - name: Exibir a versao instalada do Flutter
-      #   run: flutter --version
+      - name: Exibir a versao instalada do Flutter
+        run: flutter --version
 
-      # - name: Informacoes e configuracoes do Flutter
-      #   run: flutter doctor -v
+      - name: Informacoes e configuracoes do Flutter
+        run: flutter doctor -v
 
-      # - name: Clean
-      #   run: flutter clean
+      - name: Clean
+        run: flutter clean
 
-      # - name: Install dependencies
-      #   run: flutter pub get
+      - name: Install dependencies
+        run: flutter pub get
 
-      # - name: Generate .env
-      #   run: |
-      #     touch .env
-      #     echo "TESTE=${{ env.TESTE }}" >> .env
-      #     echo "TESTE3=${{ env.TESTE3 }}" >> .env
-      #     cat .env
+      - name: Generate .env
+        run: |
+          touch .env
+          echo "TESTE=${{ env.TESTE }}" >> .env
+          echo "TESTE3=${{ env.TESTE3 }}" >> .env
+          cat .env
 
-      # - name: Run Build Runner
-      #   run: dart run build_runner build -d
+      - name: Run Build Runner
+        run: dart run build_runner build -d
 
-      # - name: Executar Build para iOS
-      #   run: |
-      #     flutter build ios --release
+      - name: Executar Build para iOS
+        run: |
+          flutter build ios --release
 
-      # # - name: Upload IPA to App Store Connect
-      # #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
+      # - name: Upload IPA to App Store Connect
+      #   run: xcrun altool --upload-app --type ios -f build/ios/*.ipa --apiKey ${{ env.APPSTORE_API_KEY_ID }} --apiIssuer ${{ env.APPSTORE_ISSUER_ID }}
 
-      # - name: "Upload app to TestFlight"
-      #   uses: apple-actions/upload-testflight-build@v1
-      #   with:
-      #     app-path: "./build/ios/conversor_moedas.ipa"
-      #     issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
-      #     api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
-      #     api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+      - name: "Upload app to TestFlight"
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: "./build/ios/conversor_moedas.ipa"
+          issuer-id: ${{ env.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ env.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ env.APPSTORE_API_PRIVATE_KEY }}
 
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@main
-      #   with:
-      #     name: release-ipa
-      #     path: build/ios/conversor_moedas.ipa
+      - name: Upload Artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: release-ipa
+          path: build/ios/conversor_moedas.ipa
