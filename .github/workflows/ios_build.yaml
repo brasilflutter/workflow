@@ -2,31 +2,6 @@ name: "Build IOS"
 
 on:
   workflow_call: # Altere o trigger para workflow_call
-    inputs:
-      IOS_CERT_PASS:
-        description: "Senha do arquivo de certificado"
-        required: true
-        type: string
-      IOS_CERTIFICATE_FILE:
-        description: "Arquivo de certificado com bse64"
-        required: true
-        type: string
-      API_KEY:
-        description: "API_KEY de teste"
-        required: true
-        type: string
-      APPSTORE_ISSUER_ID:
-        description: "ISSUER ID da apple store"
-        required: true
-        type: string
-      APPSTORE_API_KEY_ID:
-        description: "API KEY da Apple store"
-        required: true
-        type: string
-      APPSTORE_API_PRIVATE_KEY:
-        description: "Private API KEY da Apple store"
-        required: true
-        type: string
 jobs:
   build-ios:
     env:

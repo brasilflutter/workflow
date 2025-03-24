@@ -5,7 +5,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
-
+env:
+  IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
+  IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
+  API_KEY: ${{ secrets.API_KEY }}
+  APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+  APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+  APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+  SECRET: ${{ secrets.SUA_CHAVE }}
 jobs:
   # trigger-android-build:
   #   name: Android Build
@@ -15,11 +22,11 @@ jobs:
     name: iOS Build
     # needs: trigger-android-build
     uses: ./.github/workflows/ios_build.yaml
-    secrets:
-      IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
-      IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
-      API_KEY: ${{ secrets.API_KEY }}
-      APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-      APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-      APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-      SECRET: ${{ secrets.SUA_CHAVE }}
+    with:
+      IOS_CERT_PASS: ${{ env.IOS_CERT_PASS }}
+      IOS_CERTIFICATE_FILE: ${{ env.IOS_CERTIFICATE_FILE }}
+      API_KEY: ${{ env.API_KEY }}
+      APPSTORE_ISSUER_ID: ${{ env.APPSTORE_ISSUER_ID }}
+      APPSTORE_API_KEY_ID: ${{ env.APPSTORE_API_KEY_ID }}
+      APPSTORE_API_PRIVATE_KEY: ${{ env.APPSTORE_API_PRIVATE_KEY }}
+      SECRET: ${{ env.SUA_CHAVE }}
