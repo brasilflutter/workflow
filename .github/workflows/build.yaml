@@ -34,11 +34,11 @@ jobs:
   trigger-ios-build:
     name: iOS Build
     uses: ./.github/workflows/ios_build.yaml
-    with:
+    secrets:
       IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
       IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
       API_KEY: ${{ secrets.API_KEY }}
       APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
       APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
       APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
-      SUA_CHAVE: ${{ secrets.SUA_CHAVE }}
+
