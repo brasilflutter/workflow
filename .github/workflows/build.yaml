@@ -17,6 +17,8 @@ jobs:
     secrets:
       IOS_CERT_PASS: ${{ secrets.NEW_IOS_CERT_PASS }}
       IOS_CERTIFICATE_FILE: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
+      NEW_IOS_CERT_PASS: ${{ secrets.NEW_IOS_CERT_PASS }}
+      NEW_IOS_CERTIFICATE_FILE: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
       API_KEY: ${{ secrets.API_KEY }}
       APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
       APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
