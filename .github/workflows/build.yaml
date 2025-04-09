@@ -6,17 +6,17 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  trigger-android-build:
-    name: Android Build
-    uses: ./.github/workflows/android_build.yaml
+  # trigger-android-build:
+  #   name: Android Build
+  #   uses: ./.github/workflows/android_build.yaml
 
   trigger-ios-build:
     name: iOS Build
-    needs: trigger-android-build
+    # needs: trigger-android-build
     uses: ./.github/workflows/ios_build.yaml
     secrets:
-      IOS_CERT_PASS: ${{ secrets.IOS_CERT_PASS }}
-      IOS_CERTIFICATE_FILE: ${{ secrets.IOS_CERTIFICATE_FILE }}
+      IOS_CERT_PASS: ${{ secrets.NEW_IOS_CERT_PASS }}
+      IOS_CERTIFICATE_FILE: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
       API_KEY: ${{ secrets.API_KEY }}
       APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
       APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
