@@ -3,10 +3,6 @@ name: "Build IOS"
 on:
   workflow_call:
     secrets:
-      NEW_IOS_CERT_PASS:
-        required: true
-      NEW_IOS_CERTIFICATE_FILE:
-        required: true
       APPSTORE_ISSUER_ID:
         required: true
       APPSTORE_API_KEY_ID:
@@ -49,8 +45,8 @@ jobs:
       - name: Import code sign
         uses: Apple-Actions/import-codesign-certs@v1
         with:
-          p12-file-base64: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
-          p12-password: ${{ secrets.NEW_IOS_CERT_PASS }}
+          p12-file-base64: ${{ secrets.IOS_CERTIFICATE_FILE }}
+          p12-password: ${{ secrets.IOS_CERT_PASS }}
 
       - name: Download provisioning
         uses: Apple-Actions/download-provisioning-profiles@v1
