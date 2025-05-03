@@ -53,15 +53,15 @@ jobs:
         run: |
           cd android
           touch key.properties
-          echo "storePassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
-          echo "keyPassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
-          echo "keyAlias=upload" > key.properties
-          echo "storeFile=./keystore.jks" > key.properties
+          echo "storePassword=${{ secrets.ANDROID_STOREPASSWORD }}" >> key.properties
+          echo "keyPassword=${{ secrets.ANDROID_STOREPASSWORD }}" >> key.properties
+          echo "keyAlias=upload" >> key.properties
+          echo "storeFile=./keystore.jks" >> key.properties
           cat key.properties
       - name: Generate keyproperties
         env:
           ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-        run: echo "$ANDROID_KEYSTORE" | base64 -d > ./android/app/keystore.jks
+        run: echo "$ANDROID_KEYSTORE" | base64 -d >> ./android/app/keystore.jks
 
       # - name: Run Build Runner
       #   run: dart run build_runner build -d
@@ -77,15 +77,15 @@ jobs:
       - name: Build appBundle.
         run: flutter build appbundle --release
 
-      - uses: r0adkll/sign-android-release@v1
-        name: Sign app APK
-        id: sign_app
-        with:
-          releaseDirectory: build/app/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
-          keyStorePassword: ${{   secrets.ANDROID_STOREPASSWORD }}
-          alias: upload
-          keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
+      # - uses: r0adkll/sign-android-release@v1
+      #   name: Sign app APK
+      #   id: sign_app
+      #   with:
+      #     releaseDirectory: build/app/outputs/bundle/release
+      #     signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
+      #     keyStorePassword: ${{   secrets.ANDROID_STOREPASSWORD }}
+      #     alias: upload
+      #     keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
       - name: Setup Authorization with Google Play Store
         run: echo '${{ secrets.PLAY_AUTH_JSON }}' > service_account.json
       - name: Deploy bundle to Google Play
