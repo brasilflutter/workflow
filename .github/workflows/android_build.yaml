@@ -63,7 +63,7 @@ jobs:
         id: sign_app
         with:
           releaseDirectory: build/app/outputs/bundle/release
-          signingKeyBase64: ${{ secrets.ANDROID__KEYSTORE }}
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
           alias: upload
           keyStorePassword: ${{ secrets.ANDROID_STOREPASSWORD }}
           keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
