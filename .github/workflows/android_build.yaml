@@ -9,6 +9,8 @@ on:
         required: true
       API_KEY:
         required: true
+      PLAY_AUTH_JSON:
+        required: true
 jobs:
   build-android:
     env:
@@ -68,10 +70,20 @@ jobs:
         with:
           releaseDirectory: build/app/outputs/bundle/release
           signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
+          keyStorePassword: ${{   secrets.ANDROID_STOREPASSWORD }}
           alias: upload
-          keyStorePassword: ${{ secrets.ANDROID_STOREPASSWORD }}
           keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
-
+      - name: Setup Authorization with Google Play Store
+        run: echo '${{ secrets.PLAY_AUTH_JSON }}' > service_account.json
+      - name: Deploy bundle to Google Play
+        uses: r0adkll/upload-google-play@v1.1.3
+        with:
+          serviceAccountJson: service_account.json
+          packageName: nl.jovmit.androiddevs
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: "internal"
+          status: "completed"
+          whatsNewDirectory: whatsNew/
       - name: Upload Artifact
         uses: actions/upload-artifact@main
         with:

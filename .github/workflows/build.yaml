@@ -13,6 +13,7 @@ jobs:
       ANDROID_STOREPASSWORD: ${{ secrets.ANDROID_STOREPASSWORD }}
       ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
       API_KEY: ${{ secrets.API_KEY }}
+      PLAY_AUTH_JSON: ${{ secrets.PLAY_AUTH_JSON }}
 
   # trigger-ios-build:
   #   name: iOS Build

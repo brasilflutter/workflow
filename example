@@ -1,1 +1,8 @@
 openssl base64 < upload-keystore.jks | tr -d '\n' | tee keystore
+
+base64 -i upload-keystore.jks > keystore_2
+
+
+
+https://console.cloud.google.com/iam-admin/
+https://www.youtube.com/watch?v=Fh4UyfqeB4Y&t=1141s
