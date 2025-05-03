@@ -49,6 +49,14 @@ jobs:
           echo "TESTE=${{ vars.TESTE }}" >> .env
           echo "TESTE3=${{ env.TESTE3 }}" >> .env
           cat .env
+      - name: Generate keyproperties
+        run: |
+          cd android
+          touch key.properties
+          echo "storePassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
+          echo "keyPassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
+          echo "keyAlias=upload" > key.properties
+          cat key.properties
 
       # - name: Run Build Runner
       #   run: dart run build_runner build -d
