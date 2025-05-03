@@ -1,2 +1,0 @@
-C:/projetos/flutter/conversor_moedas/android/app/.cxx/Debug/684h3t4w/armeabi-v7a/CMakeFiles/edit_cache.dir
-C:/projetos/flutter/conversor_moedas/android/app/.cxx/Debug/684h3t4w/armeabi-v7a/CMakeFiles/rebuild_cache.dir
