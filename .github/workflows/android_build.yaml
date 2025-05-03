@@ -56,7 +56,12 @@ jobs:
           echo "storePassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
           echo "keyPassword=${{ secrets.ANDROID_STOREPASSWORD }}" > key.properties
           echo "keyAlias=upload" > key.properties
+          echo "storeFile=./keystore.jks" > key.properties
           cat key.properties
+      - name: Generate keyproperties
+        env:
+          ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: echo "$ANDROID_KEYSTORE" | base64 -d > ./android/app/keystore.jks
 
       # - name: Run Build Runner
       #   run: dart run build_runner build -d
