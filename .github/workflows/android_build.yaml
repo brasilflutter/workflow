@@ -48,8 +48,8 @@ jobs:
           echo "TESTE3=${{ env.TESTE3 }}" >> .env
           cat .env
 
-      - name: Run Build Runner
-        run: dart run build_runner build -d
+      # - name: Run Build Runner
+      #   run: dart run build_runner build -d
 
       - name: Statically analyze
         run: flutter analyze .
