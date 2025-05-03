@@ -5,6 +5,9 @@ on:
     branches: [main]
 jobs:
   build-android:
+    env:
+      TESTE3: "21"
+      TESTE: ${{ vars.TESTE }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
