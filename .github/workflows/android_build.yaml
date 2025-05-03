@@ -76,16 +76,14 @@ jobs:
         run: flutter build apk --release
       - name: Build appBundle.
         run: flutter build appbundle --release
+      - name: Build appBundle.
+        run: |
+          cd $(Build.SourcesDirectory)
+          path_to_pubspec="pubspec.yaml"
+          current_version=$(awk '/^version:/ {print $2}' $path_to_pubspec)
+          current_version_without_build=$(echo "$current_version" | sed 's/\+.*//')
+          echo "Generated version $current_version
 
-      # - uses: r0adkll/sign-android-release@v1
-      #   name: Sign app APK
-      #   id: sign_app
-      #   with:
-      #     releaseDirectory: build/app/outputs/bundle/release
-      #     signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE }}
-      #     keyStorePassword: ${{   secrets.ANDROID_STOREPASSWORD }}
-      #     alias: upload
-      #     keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
       - name: Setup Authorization with Google Play Store
         run: echo '${{ secrets.PLAY_AUTH_JSON }}' > service_account.json
       - name: Deploy bundle to Google Play
