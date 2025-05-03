@@ -97,8 +97,13 @@ jobs:
           track: "internal"
           status: "completed"
           whatsNewDirectory: whatsNew/
-      - name: Upload Artifact
+      - name: Upload Artifact APK
         uses: actions/upload-artifact@main
         with:
           name: release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
+      - name: Upload Artifact AAB
+        uses: actions/upload-artifact@main
+        with:
+          name: release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
