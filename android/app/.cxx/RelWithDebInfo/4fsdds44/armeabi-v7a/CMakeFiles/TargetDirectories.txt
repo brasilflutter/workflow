@@ -1,0 +1,2 @@
+C:/projetos/flutter/workflow/android/app/.cxx/RelWithDebInfo/4fsdds44/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/projetos/flutter/workflow/android/app/.cxx/RelWithDebInfo/4fsdds44/armeabi-v7a/CMakeFiles/rebuild_cache.dir

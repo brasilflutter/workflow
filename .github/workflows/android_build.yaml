@@ -1,8 +1,12 @@
 name: "Build Android"
 
 on:
-  workflow_call: # Altere o trigger para workflow_call
-
+  workflow_call:
+    secrets:
+      ANDROID_STOREPASSWORD:
+        required: true
+      ANDROID_KEYSTORE:
+        required: true
 jobs:
   build-android:
     env:
@@ -51,6 +55,18 @@ jobs:
 
       - name: Build apk.
         run: flutter build apk --release
+      - name: Build appBundle.
+        run: flutter build appbundle --release
+
+      - uses: r0adkll/sign-android-release@v1
+        name: Sign app APK
+        id: sign_app
+        with:
+          releaseDirectory: build/app/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.ANDROID__KEYSTORE }}
+          alias: upload
+          keyStorePassword: ${{ secrets.ANDROID_STOREPASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_STOREPASSWORD }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@main
