@@ -7,10 +7,14 @@ on:
         required: true
       ANDROID_KEYSTORE:
         required: true
+      API_KEY:
+        required: true
 jobs:
   build-android:
     env:
       TESTE3: "21"
+      TESTE: ${{ vars.TESTE }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
