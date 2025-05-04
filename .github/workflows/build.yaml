@@ -1,10 +1,9 @@
 name: "Flutter CI"
 
 on:
-  # push:
-  #   branches: [main]
-  pull_request:
+  push:
     branches: [main]
+
 jobs:
   trigger-android-build:
     name: Android Build
@@ -15,14 +14,14 @@ jobs:
       API_KEY: ${{ secrets.API_KEY }}
       PLAY_AUTH_JSON: ${{ secrets.PLAY_AUTH_JSON }}
 
-  # trigger-ios-build:
-  #   name: iOS Build
-  #   needs: trigger-android-build
-  #   uses: ./.github/workflows/ios_build.yaml
-  #   secrets:
-  #     IOS_CERT_PASS: ${{ secrets.NEW_IOS_CERT_PASS }}
-  #     IOS_CERTIFICATE_FILE: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
-  #     API_KEY: ${{ secrets.API_KEY }}
-  #     APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
-  #     APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
-  #     APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+  trigger-ios-build:
+    name: iOS Build
+    needs: trigger-android-build
+    uses: ./.github/workflows/ios_build.yaml
+    secrets:
+      IOS_CERT_PASS: ${{ secrets.NEW_IOS_CERT_PASS }}
+      IOS_CERTIFICATE_FILE: ${{ secrets.NEW_IOS_CERTIFICATE_FILE }}
+      API_KEY: ${{ secrets.API_KEY }}
+      APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+      APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+      APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
