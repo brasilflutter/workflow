@@ -81,7 +81,6 @@ jobs:
 
       - name: Print Version.
         run: |
-          cd $(Build.SourcesDirectory)
           path_to_pubspec="pubspec.yaml"
           current_version=$(awk '/^version:/ {print $2}' $path_to_pubspec)
           current_version_without_build=$(echo "$current_version" | sed 's/\+.*//')
